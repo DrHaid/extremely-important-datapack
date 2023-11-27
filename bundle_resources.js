@@ -5,7 +5,7 @@ const path = require('path');
 
 console.log('⌛ Bundling resources...')
 
-const targetDir = path.join(__dirname, config.outputPath)
+const targetDir = path.resolve(config.outputPath)
 if (!fs.existsSync(targetDir)){
     fs.mkdirSync(targetDir, { recursive: true });
 }

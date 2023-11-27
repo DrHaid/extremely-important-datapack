@@ -1,7 +1,7 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made with Blockbench, by Dr.Haid",
 	"textures": {
-		"1": "brown"
+		"1": "custom/brown"
 	},
 	"elements": [
 		{
@@ -150,9 +150,30 @@
 		}
 	],
 	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 8, 0]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 8, 0]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 120, 0],
+			"translation": [1.25, 8.75, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 121, 0],
+			"translation": [1.25, 8.75, 0]
+		},
+		"ground": {
+			"translation": [0, 6, 0]
+		},
+		"head": {
+			"translation": [0, 14.3, 0]
+		},
 		"fixed": {
 			"rotation": [-90, 0, 0],
-			"translation": [0, 0, -8]
+			"translation": [0, 0, -20],
+			"scale": [2.5, 2.5, 2.5]
 		}
 	},
 	"groups": [
