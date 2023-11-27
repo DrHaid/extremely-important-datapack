@@ -1,0 +1,5 @@
+{
+    "name": "extremely-important-resources",
+    "resources": "./resources",
+    "outputPath": "./.resources/output"
+}

@@ -4,7 +4,8 @@
   "description": "A Minecraft datapack created with Sandstone",
   "scripts": {
     "watch": "sand watch",
-    "build": "sand build"
+    "build": "sand build",
+    "res-build": "node bundle_resources.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.14.0",
+    "archiver": "^6.0.1",
     "sandstone-cli": "^0.5.4",
     "typescript": "^4.9.5"
   },
