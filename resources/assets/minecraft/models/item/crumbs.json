@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench, by Dr.Haid",
 	"textures": {
-		"1": "custom/brown"
+		"1": "item/brown"
 	},
 	"elements": [
 		{
@@ -166,6 +166,11 @@
 		},
 		"ground": {
 			"translation": [0, 6, 0]
+		},
+		"gui": {
+			"rotation": [30, 130, 0],
+			"translation": [0.75, 8, 0],
+			"scale": [1.5, 1.5, 1.5]
 		},
 		"head": {
 			"translation": [0, 14.3, 0]

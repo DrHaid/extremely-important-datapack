@@ -1,6 +1,8 @@
-import { _, execute, MCFunction, Objective, Selector, tellraw } from 'sandstone'
+import { _, execute, kill, MCFunction, NBT, Objective, playsound, rel, Selector, setblock, summon, tag } from 'sandstone'
 
 const HUNGER_THRESHOLD = 2
+const CRUMBS_HELPER_BLOCK = 'minecraft:melon_stem[age=0]'
+const CRUMBS_FRAME_NBT = {Silent: NBT`1b`, Facing: NBT`1b`, Invulnerable: NBT`1b`, Invisible:NBT`1b`, Fixed:NBT`1b`, Tags:["crumbs"], Item:{id:"minecraft:iron_nugget", Count: NBT`1b`, tag:{CustomModelData:344457}}}
 
 const hunger = Objective.create('hunger', 'food', {text: 'Hunger'})
 const prevHunger = Objective.create('prevHunger', 'dummy', {text: 'Previous Hunger'})
@@ -29,8 +31,8 @@ MCFunction('check_hunger', () => {
     
     // do something if threshold reached
     _.if(pTotalHungerLost.greaterOrEqualThan(HUNGER_THRESHOLD), () => {
-      tellraw(player, {text: 'doing something!'})
       pTotalHungerLost.set(0)
+      placeItemFrame()
     })
     
     // score should never be negative, but might happen?
@@ -40,4 +42,36 @@ MCFunction('check_hunger', () => {
   })
 }, {
   runEach: '1s'
+})
+
+MCFunction('check_crumbs_placement', () => {
+  const itemFrameNotPlaced = Selector('@e', {type: 'minecraft:item_frame', tag: ['crumbs', '!placed']})
+  execute.as(itemFrameNotPlaced).at('@s').run(() => {
+    placeCrumbs()
+  })
+
+  const itemFramePlaced = Selector('@e', {type: 'minecraft:item_frame', tag: ['crumbs', 'placed']})
+  execute.as(itemFramePlaced).at('@s').unless(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK)).run(() => {
+    removeCrumbs()
+  })
+}, {
+  runEachTick: true
+})
+
+const placeItemFrame = MCFunction('place_item_frame', () => {
+  summon('minecraft:item_frame', rel(0, 0, 0), CRUMBS_FRAME_NBT)
+  playsound('extremelyimportant:exhaust', 'player', '@a', rel(0, 0, 0))
+})
+
+const placeCrumbs = MCFunction('place_crumbs', () => {
+  setblock(rel(0, 0, 0), CRUMBS_HELPER_BLOCK)
+  tag('@s').add('placed')
+})
+
+const removeCrumbs = MCFunction('remove_crumbs', () => {
+  // kill item frame
+  kill('@s')
+  // kill any melon seeds that might drop
+  const seeds = Selector('@e', {type: 'item', nbt: {Item: {id: "minecraft:melon_seeds"}}})
+  kill(seeds)
 })
