@@ -8,14 +8,14 @@ const hunger = Objective.create('hunger', 'food', {text: 'Hunger'})
 const prevHunger = Objective.create('prevHunger', 'dummy', {text: 'Previous Hunger'})
 const totalHungerLost = Objective.create('totalHungerLost', 'dummy', {text: 'Total Hunger Lost'})
 const hungerThreshold = Objective.create('hungerThreshold', 'dummy', {text: 'Hunger Threshold'})
+const isTracked = Objective.create('isTracked', 'dummy', {text: 'Is Tracked'})
 
-MCFunction('init_scoreboard', () => {
-  const allPlayers = Selector('@a')
-  hungerThreshold(allPlayers).set(DEFAULT_THRESHOLD)
-  totalHungerLost(allPlayers).set(0)
-  prevHunger(allPlayers).set(hunger(allPlayers))
-}, {
-  runOnLoad: true
+const init_player_score = MCFunction('init_scoreboard', () => {
+  const player = Selector('@s')
+  hungerThreshold(player).set(DEFAULT_THRESHOLD)
+  totalHungerLost(player).set(0)
+  prevHunger(player).set(hunger(player))
+  isTracked(player).set(1)
 })
 
 MCFunction('check_hunger', () => {
@@ -24,7 +24,13 @@ MCFunction('check_hunger', () => {
     const pHunger = hunger(player)
     const pPrevHunger = prevHunger(player)
     const pTotalHungerLost = totalHungerLost(player)
-    const pHungerThreshold = totalHungerLost(player)
+    const pHungerThreshold = hungerThreshold(player)
+    const pIsTracked = isTracked(player)
+
+    // check if scoreboard was initialized for player
+    _.if(pIsTracked.notEqualTo(1), () => {
+      init_player_score()
+    })
 
     // check if hunger has changed
     _.if(pHunger.lessThan(pPrevHunger), () => {
