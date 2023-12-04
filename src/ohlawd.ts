@@ -33,8 +33,10 @@ MCFunction('check_hunger', () => {
     })
 
     // check if hunger has changed
-    _.if(pHunger.lessThan(pPrevHunger), () => {
-      pTotalHungerLost.add(pPrevHunger.minus(pHunger))
+    _.if(pHunger.notEqualTo(pPrevHunger), () => {
+      _.if(pHunger.lessThan(pPrevHunger), () => {
+        pTotalHungerLost.add(pPrevHunger.minus(pHunger))
+      })
       pPrevHunger.set(pHunger)
     })
     
