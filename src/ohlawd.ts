@@ -1,4 +1,4 @@
-import { _, execute, kill, MCFunction, NBT, Objective, playsound, rel, Selector, setblock, summon, tag, Variable } from 'sandstone'
+import { _, execute, kill, MCFunction, NBT, Objective, playsound, rel, Selector, setblock, summon, tag } from 'sandstone'
 
 const DEFAULT_THRESHOLD = 20
 const CRUMBS_HELPER_BLOCK = 'minecraft:melon_stem'
@@ -20,7 +20,9 @@ const init_player_score = MCFunction('init_scoreboard', () => {
 })
 
 MCFunction('check_hunger', () => {
-  execute.as('@a').at('@s').run(() => {
+  execute.as('@a')
+  .at('@s')
+  .run(() => {
     const player = Selector('@s')
     const pHunger = hunger(player)
     const pPrevHunger = prevHunger(player)
@@ -58,12 +60,18 @@ MCFunction('check_hunger', () => {
 
 MCFunction('check_crumbs_placement', () => {
   const itemFrameNotPlaced = Selector('@e', {type: 'minecraft:item_frame', tag: ['crumbs', '!placed']})
-  execute.as(itemFrameNotPlaced).at('@s').run(() => {
+  execute.as(itemFrameNotPlaced)
+  .at('@s')
+  .run(() => {
     placeCrumbsHelperBlock()
   })
 
   const itemFramePlaced = Selector('@e', {type: 'minecraft:item_frame', tag: ['crumbs', 'placed']})
-  execute.as(itemFramePlaced).at('@s').unless(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK_0)).run(() => {
+  execute
+  .as(itemFramePlaced)
+  .at('@s')
+  .unless(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK_0))
+  .run(() => {
     removeCrumbs()
   })
 }, {
@@ -71,8 +79,13 @@ MCFunction('check_crumbs_placement', () => {
 })
 
 const placeCrumbs = MCFunction('place_crumbs', () => {
-  summon('minecraft:item_frame', rel(0, 0, 0), CRUMBS_FRAME_NBT)
-  playsound('extremelyimportant:exhaust', 'player', '@a', rel(0, 0, 0))
+  execute.as('@s')  
+  .positioned(rel(0, 0.3, 0))
+  .align('y')
+  .run(() => {
+    summon('minecraft:item_frame', rel(0, 0, 0), CRUMBS_FRAME_NBT)
+    playsound('extremelyimportant:exhaust', 'player', '@a', rel(0, 0, 0))
+  })
 })
 
 const placeCrumbsHelperBlock = MCFunction('place_crumbs_helper_block', () => {
