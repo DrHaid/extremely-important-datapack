@@ -1,7 +1,8 @@
 import { _, execute, kill, MCFunction, NBT, Objective, playsound, rel, Selector, setblock, summon, tag, Variable } from 'sandstone'
 
 const DEFAULT_THRESHOLD = 20
-const CRUMBS_HELPER_BLOCK = 'minecraft:melon_stem[age=0]'
+const CRUMBS_HELPER_BLOCK = 'minecraft:melon_stem'
+const CRUMBS_HELPER_BLOCK_0 = 'minecraft:melon_stem[age=0]'
 const CRUMBS_FRAME_NBT = {Silent: NBT`1b`, Facing: NBT`1b`, Invulnerable: NBT`1b`, Invisible:NBT`1b`, Fixed:NBT`1b`, Tags:["crumbs"], Item:{id:"minecraft:iron_nugget", Count: NBT`1b`, tag:{CustomModelData:344457}}}
 
 const hunger = Objective.create('hunger', 'food', {text: 'Hunger'})
@@ -43,7 +44,7 @@ MCFunction('check_hunger', () => {
     // do something if threshold reached
     _.if(pTotalHungerLost.greaterOrEqualThan(pHungerThreshold), () => {
       pTotalHungerLost.set(0)
-      placeItemFrame()
+      placeCrumbs()
     })
     
     // score should never be negative, but might happen?
@@ -58,24 +59,24 @@ MCFunction('check_hunger', () => {
 MCFunction('check_crumbs_placement', () => {
   const itemFrameNotPlaced = Selector('@e', {type: 'minecraft:item_frame', tag: ['crumbs', '!placed']})
   execute.as(itemFrameNotPlaced).at('@s').run(() => {
-    placeCrumbs()
+    placeCrumbsHelperBlock()
   })
 
   const itemFramePlaced = Selector('@e', {type: 'minecraft:item_frame', tag: ['crumbs', 'placed']})
-  execute.as(itemFramePlaced).at('@s').unless(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK)).run(() => {
+  execute.as(itemFramePlaced).at('@s').unless(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK_0)).run(() => {
     removeCrumbs()
   })
 }, {
   runEachTick: true
 })
 
-const placeItemFrame = MCFunction('place_item_frame', () => {
+const placeCrumbs = MCFunction('place_crumbs', () => {
   summon('minecraft:item_frame', rel(0, 0, 0), CRUMBS_FRAME_NBT)
   playsound('extremelyimportant:exhaust', 'player', '@a', rel(0, 0, 0))
 })
 
-const placeCrumbs = MCFunction('place_crumbs', () => {
-  setblock(rel(0, 0, 0), CRUMBS_HELPER_BLOCK)
+const placeCrumbsHelperBlock = MCFunction('place_crumbs_helper_block', () => {
+  setblock(rel(0, 0, 0), CRUMBS_HELPER_BLOCK_0, "keep")
   tag('@s').add('placed')
 })
 
@@ -85,4 +86,8 @@ const removeCrumbs = MCFunction('remove_crumbs', () => {
   // kill any melon seeds that might drop
   const seeds = Selector('@e', {type: 'item', nbt: {Item: {id: "minecraft:melon_seeds"}}})
   kill(seeds)
+  // remove melon stem if still there
+  _.if(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK), () => {
+    setblock(rel(0, 0, 0), 'minecraft:air')
+  })
 })
