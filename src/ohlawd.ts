@@ -1,6 +1,6 @@
 import { _, Advancement, execute, kill, MCFunction, NBT, Objective, playsound, rel, Selector, SelectorClass, setblock, summon, tag } from 'sandstone'
 
-const DEFAULT_THRESHOLD = 20
+const DEFAULT_THRESHOLD = 15
 const DEFAULT_THRESHOLD_MAX = 25
 const CRUMBS_HELPER_BLOCK = 'minecraft:melon_stem'
 const CRUMBS_HELPER_BLOCK_0 = 'minecraft:melon_stem[age=0]'
@@ -54,7 +54,7 @@ const init_player_score = MCFunction('init_scoreboard', () => {
   // player tracking
   isTracked(player).set(1)
   // intolerance
-  isIntolerant(player).set(0)
+  isIntolerant(player).set(1)
   // hunger
   hungerThreshold(player).set(DEFAULT_THRESHOLD)
   hungerThresholdMax(player).set(DEFAULT_THRESHOLD_MAX)
@@ -152,7 +152,7 @@ const removeCrumbs = MCFunction('remove_crumbs', () => {
   // kill item frame
   kill('@s')
   // kill any melon seeds that might drop
-  const seeds = Selector('@e', {type: 'item', distance: 2, nbt: {Item: {id: "minecraft:melon_seeds"}}})
+  const seeds = Selector('@e', {type: 'item', distance: [0, 2], nbt: {Item: {id: "minecraft:melon_seeds"}}})
   kill(seeds)
   // remove melon stem if still there
   _.if(_.block(rel(0, 0, 0), CRUMBS_HELPER_BLOCK), () => {
