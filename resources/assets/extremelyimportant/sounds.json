@@ -1,7 +1,12 @@
 {
-    "exhaust": {
-      "sounds": [
-        "exhaust"
-      ]
-    }
+  "exhaust": {
+    "sounds": [
+      "exhaust"
+    ]
+  },
+  "broken_exhaust": {
+    "sounds": [
+      "broken_exhaust"
+    ]
   }
+}

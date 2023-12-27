@@ -1,11 +1,12 @@
 # Extemely important datapack
 
-It's not doing much yet.
+Don't ask. You need this.  
+Download [here](https://github.com/DrHaid/extremely-important-datapack/releases).
 
-```mcfunction
-/give @p item_frame{display:{Name:'{"text":"Oh oh!"}'},CustomModelData:344457,EntityTag:{Tags:["crumbs"],Item:{id:"minecraft:iron_nugget",Count:1b,tag:{CustomModelData:344457}},Fixed:1b,Invisible:1b,Silent:1b,Invulnerable:1b}} 1
-/summon item_frame ~ ~ ~ {Silent:1b,Facing:1b,Invulnerable:1b,Invisible:1b,Fixed:1b,Tags:["crumbs"],Item:{id:"minecraft:iron_nugget",Count:1b,tag:{CustomModelData:344457}}}
-```
+1. Add the datapack to your Minecraft world or server
+2. Also install and enable the resource pack
+3. ???
+4. Profit
 
 ---
 
