@@ -1,4 +1,5 @@
 # Extemely important datapack
+![](https://github.com/DrHaid/extremely-important-datapack/actions/workflows/publish.yml/badge.svg)  
 
 Don't ask. You need this.  
 Download [here](https://github.com/DrHaid/extremely-important-datapack/releases).
