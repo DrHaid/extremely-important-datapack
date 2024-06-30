@@ -2,8 +2,8 @@ import type { SandstoneConfig } from 'sandstone'
 
 export default {
   name: 'extremely-important-datapack',
-  description: [ 'A ', { text: 'Sandstone', color: 'gold' }, ' data pack.' ],
-  formatVersion: 7,
+  description: [ 'An ', { text: 'extemely important', color: 'gold' }, ' data pack.' ],
+  formatVersion: 42,
   namespace: 'extremely-important-datapack',
   packUid: 'ZKBfOwKq',
   saveOptions: { path: './.sandstone/output/datapack' },
