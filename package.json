@@ -5,15 +5,18 @@
   "scripts": {
     "watch": "sand watch",
     "build": "sand build",
-    "res-build": "node bundle_resources.js"
+    "res-build": "node bundle_resources.js",
+    "patch-changes": "ts-node patch_breaking_changes.ts"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "sandstone": "^0.13.6"
+    "sandstone": "^0.13.6",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/archiver": "^6.0.3",
     "@types/node": "^18.14.0",
     "archiver": "^6.0.1",
     "sandstone-cli": "^0.5.4",

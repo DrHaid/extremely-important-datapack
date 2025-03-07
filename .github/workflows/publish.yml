@@ -22,6 +22,7 @@ jobs:
       - name: Build datapack
         run: |
           npm run build
+          npm run patch-changes
           (cd .sandstone/output/datapack/extremely-important-datapack && zip -r ../extremely-important-datapack.zip .)
 
       - name: Build resource pack

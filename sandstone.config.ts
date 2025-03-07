@@ -2,7 +2,7 @@ import type { SandstoneConfig } from 'sandstone'
 
 export default {
   name: 'extremely-important-datapack',
-  description: [ 'An ', { text: 'extemely important', color: 'gold' }, ' data pack.' ],
+  description: [ 'An ', { text: 'extremely important', color: 'gold' }, ' data pack.' ],
   formatVersion: 61,
   namespace: 'extremely-important-datapack',
   packUid: 'ZKBfOwKq',
