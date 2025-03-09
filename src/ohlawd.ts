@@ -4,7 +4,17 @@ const DEFAULT_THRESHOLD = 15
 const DEFAULT_THRESHOLD_MAX = 25
 const CRUMBS_HELPER_BLOCK = 'minecraft:melon_stem'
 const CRUMBS_HELPER_BLOCK_0 = 'minecraft:melon_stem[age=0]'
-const CRUMBS_FRAME_NBT = {Silent: NBT`1b`, Facing: NBT`1b`, Invulnerable: NBT`1b`, Invisible:NBT`1b`, Fixed:NBT`1b`, Tags:["crumbs"], Item:{id:"minecraft:iron_nugget", Count: NBT`1b`, tag:{CustomModelData:344457}}}
+const CRUMBS_FRAME_NBT = {Silent: NBT`1b`, Facing: NBT`1b`, Invulnerable: NBT`1b`, Invisible:NBT`1b`, Fixed:NBT`1b`, Tags:["crumbs"],
+  Item:{
+    id:"minecraft:iron_nugget", 
+    count: NBT`1b`,
+    components: {
+      custom_model_data: {
+        strings:["crumbs"]
+      }
+    }
+  }
+}
 
 const isTracked = Objective.create('isTracked', 'dummy', {text: 'Is Tracked'})
 const isIntolerant = Objective.create('isIntolerant', 'dummy', {text: 'Is Intolerant'})

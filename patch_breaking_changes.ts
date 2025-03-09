@@ -1,6 +1,5 @@
 import config from './sandstone.config';
 import * as fs from 'fs';
-import * as archiver from 'archiver';
 import * as path from 'path';
 
 const FOLDER_RENAME_PATTERNS = [
@@ -8,23 +7,29 @@ const FOLDER_RENAME_PATTERNS = [
     { search: 'functions', replacement: 'function' }
   ];
 
-const CONTENT_PATCHES = [
-  {
-    files: [
-      'data/$name$/function/place_crumbs/execute_as.mcfunction', 
-      'data/$name$/function/do_accident/execute_as.mcfunction'
-    ],
-    regex: /Count:(.+)/,
-    replacement: 'count:$1'
-  },
-  {
-    files: [
-      'data/$name$/function/place_crumbs/execute_as.mcfunction',
-      'data/$name$/function/do_accident/execute_as.mcfunction'
-    ],
-    regex: /tag:{CustomModelData:(\d+)}/,
-    replacement: "components:{'minecraft:custom_model_data':$1}"
-  }
+type ContentPatch = {
+  files: string[];
+  regex: RegExp;
+  replacement: string;
+};
+
+const CONTENT_PATCHES: ContentPatch[] = [
+  // {
+  //   files: [
+  //     'data/$name$/function/place_crumbs/execute_as.mcfunction', 
+  //     'data/$name$/function/do_accident/execute_as.mcfunction'
+  //   ],
+  //   regex: /Count:(.+)/,
+  //   replacement: 'count:$1'
+  // },
+  // {
+  //   files: [
+  //     'data/$name$/function/place_crumbs/execute_as.mcfunction',
+  //     'data/$name$/function/do_accident/execute_as.mcfunction'
+  //   ],
+  //   regex: /tag:{CustomModelData:(\d+)}/,
+  //   replacement: "components:{'minecraft:custom_model_data':$1}"
+  // }
 ]
 
 function renameFolders(dirPath: string) {
@@ -87,7 +92,9 @@ const dataPackDir = path.join(targetDir, config.name);
 
 console.log('📁 Renaming directories...');
 renameFolders(dataPackDir);
-console.log('🔧 Patching files...');
-patchContent(dataPackDir, config.name);
+
+// Not required for now
+// console.log('🔧 Patching files...');
+// patchContent(dataPackDir, config.name);
 
 console.log('✅ Datapack contents patched!');
