@@ -127,6 +127,7 @@ const placeBase = (target: SelectorClass<true, true>, sound: string) => {
   execute.as(target)
   .positioned(rel(0, 0.3, 0))
   .align('y')
+  .unless(_.block(rel(0, -1, 0), 'minecraft:air'))
   .run(() => {
     summon('minecraft:item_frame', rel(0, 0, 0), CRUMBS_FRAME_NBT)
     playsound(sound, 'player', '@a', rel(0, 0, 0))
